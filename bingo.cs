@@ -9,7 +9,7 @@ namespace Bingo
     {
         static void Main(string[] args)
         {
-            const string dir = @"c:\bingo\";
+            const string dir = @".\";
             const string center = "center.jpg";
             const int size = 4;
             const int count = 30;
