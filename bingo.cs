@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Mono.Options;
 
 namespace Bingo
 {
@@ -9,7 +10,20 @@ namespace Bingo
     {
         static void Main(string[] args)
         {
-            string title = args.Length > 0? args[0] : "title";
+            string title = "";
+            var opts = new Mono.Options.OptionSet {
+                { "t|title=", "title of the bingo cards", t => title = t },
+            };
+
+            try
+            {
+                opts.Parse(args);
+            }
+            catch(OptionException e) {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
             const string dir = @".\";
             const string center = "center.jpg";
             const int size = 4;
