@@ -20,12 +20,14 @@ namespace Bingo
                 while (!r.EndOfStream)
                     words.Add(r.ReadLine());
             }
-            for (int i = 0; i < count; ++i)
+
+            using (var w = new System.IO.StreamWriter(dir + "output.html", false, Encoding.UTF8))
             {
-                var shuffled = words.OrderBy(a => Guid.NewGuid()).ToArray();
-                using (var w = new System.IO.StreamWriter(dir + "card" + i + ".html", false, Encoding.UTF8))
+                w.WriteLine("<html dir=\"rtl\"><body>");
+                for (int i = 0; i < count; ++i)
                 {
-                    w.WriteLine("<html dir=\"rtl\"><h1>"+ title +"</h1><body><table border=\"1\">");
+                    var shuffled = words.OrderBy(a => Guid.NewGuid()).ToArray();
+                    w.WriteLine("<h1>"+ title +"</h1><table border=\"1\">");
                     for (int row = 0; row < size; ++row)
                     {
                         w.WriteLine("<tr>");
@@ -41,10 +43,13 @@ namespace Bingo
                         }
                         w.WriteLine("</tr>");
                     }
-                    w.WriteLine("</table></body></html>");
+                    w.WriteLine("</table><p style=\"page-break-after: always;\">&nbsp;</p>");
                 }
+                w.WriteLine("</body></html>");
             }
+
             Console.WriteLine("done");
         }
+
     }
 }
