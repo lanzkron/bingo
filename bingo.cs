@@ -9,6 +9,7 @@ namespace Bingo
     {
         static void Main(string[] args)
         {
+            string title = args.Length > 0? args[0] : "title";
             const string dir = @".\";
             const string center = "center.jpg";
             const int size = 4;
@@ -24,7 +25,7 @@ namespace Bingo
                 var shuffled = words.OrderBy(a => Guid.NewGuid()).ToArray();
                 using (var w = new System.IO.StreamWriter(dir + "card" + i + ".html", false, Encoding.UTF8))
                 {
-                    w.WriteLine("<html dir=\"rtl\"><h1>בינגו חתונת הזהב</h1><body><table border=\"1\">");
+                    w.WriteLine("<html dir=\"rtl\"><h1>"+ title +"</h1><body><table border=\"1\">");
                     for (int row = 0; row < size; ++row)
                     {
                         w.WriteLine("<tr>");
