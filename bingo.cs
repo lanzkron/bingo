@@ -27,6 +27,7 @@ namespace Bingo
             string file = "bingo.txt";
             string dir = ".";
             uint count = 30;
+            bool rtl = false;
 
             var opts = new Mono.Options.OptionSet {
                 { "title=", "title of the bingo cards", t => options.title = t },
@@ -34,6 +35,7 @@ namespace Bingo
                 { "center=", "value to be entered in center tile of all cards", c => options.center = c},
                 { "size=", "dimensions of the bingo cards", s => options.size = UInt32.Parse(s) },
                 { "count=", "number of bingo cards to create", c => count = UInt32.Parse(c)},
+                { "rtl", "create Right To Left cards", x => rtl = true },
             };
 
             try
@@ -62,14 +64,15 @@ namespace Bingo
 
             using (var w = new System.IO.StreamWriter(Path.Combine(dir, "output.html"), false, Encoding.UTF8))
             {
-                writeCards(w, options, words, dir, count);
+                writeCards(w, options, words, dir, count, rtl);
             }
 
             Console.WriteLine("done");
         }
 
-        static void writeCards(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir, uint count) {
-            w.WriteLine("<html dir=\"rtl\"><body>");
+        static void writeCards(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir, uint count, bool rtl) {
+            w.WriteLine("<html {0}><body>", rtl? "dir=\"rtl\"": "");
+
             for (uint i = 0; i < count; ++i)
             {
                 writeCard(w, options, words, dir);
