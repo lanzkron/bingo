@@ -21,6 +21,7 @@ namespace Bingo
 
     class Program
     {
+        const int cellSize = 200;
         static void Main(string[] args)
         {
             var options = new Options(4);
@@ -85,7 +86,7 @@ namespace Bingo
 
         static void writeCard(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir) {
             var shuffled = words.OrderBy(a => Guid.NewGuid()).ToArray();
-            w.WriteLine("<h1>"+ options.title +"</h1><table border=\"1\">");
+            w.WriteLine($"<h1>{options.title}</h1><table border=\"1\">");
             for (int row = 0; row < options.size; ++row)
             {
                 w.WriteLine("<tr>");
@@ -93,15 +94,34 @@ namespace Bingo
                 {
                     var x = shuffled[col + row * options.size];
                     var middle = options.size / 2;
-                    if (col == middle && row == middle && options.center != null)
-                        x = options.center;
-                    if (System.IO.File.Exists(Path.Combine(dir, x)))
-                        x = "<img width=\"100\" height=\"100\" src=\"" + x + "\"/>";
-                    w.WriteLine("<td align=\"center\" style=\"width:100px;height:100px \" >" + x + "</td>");
+                    if (col == middle && row == middle && options.center != null) {
+                        x = options.center;                    
+                    }
+                    if (safeExists(dir, x)) {    
+                        x = $"<img width=\"{cellSize}\" height=\"{cellSize}\" src=\"{x}\"/>"; 
+                    }
+                    else {
+                        x = x.Replace("|", "<br/>");
+                    }
+                
+                    w.WriteLine($"<td align=\"center\" style=\"width:{cellSize}px;height:{cellSize}px \" ><big>" + x + "</big></td>");
                 }
                 w.WriteLine("</tr>");
             }
             w.WriteLine("</table><p style=\"page-break-after: always;\">&nbsp;</p>");
+        }
+
+        // Protect against invalid path chars in `file`
+        static bool safeExists(string dir, string file)
+        {
+            try
+            {
+                return System.IO.File.Exists(Path.Combine(dir, file));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
