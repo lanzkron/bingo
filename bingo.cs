@@ -74,13 +74,13 @@ namespace Bingo
         }
 
         static void writeCards(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir, uint count, bool rtl) {
-            w.WriteLine("<html {0}><body>", rtl? "dir=\"rtl\"": "");
+            w.WriteLine("<html {0}><body><center>", rtl? "dir=\"rtl\"": "");
 
             for (uint i = 0; i < count; ++i)
             {
                 writeCard(w, options, words, dir);
             }
-            w.WriteLine("</body></html>");
+            w.WriteLine("</center></body></html>");
         }
 
         static void writeCard(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir) {
