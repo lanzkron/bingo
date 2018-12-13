@@ -57,8 +57,11 @@ namespace Bingo
             var words = new List<string>();
             using (var r = new System.IO.StreamReader(Path.Combine(dir, file)))
             {
-                while (!r.EndOfStream)
-                    words.Add(r.ReadLine());
+                while (!r.EndOfStream) {
+                    string line = r.ReadLine();
+                    if (!String.IsNullOrWhiteSpace(line))   
+                        words.Add(line);
+                }
             }
             Console.WriteLine("Read {0} lines from {1}", words.Count, file);
 
