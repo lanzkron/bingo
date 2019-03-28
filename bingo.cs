@@ -60,7 +60,7 @@ namespace Bingo
             {
                 while (!r.EndOfStream) {
                     string line = r.ReadLine();
-                    if (!String.IsNullOrWhiteSpace(line))   
+                    if (!String.IsNullOrWhiteSpace(line))
                         words.Add(line);
                 }
             }
@@ -75,7 +75,7 @@ namespace Bingo
         }
 
         static void writeCards(System.IO.StreamWriter w, Options options, IEnumerable<string> words, string dir, uint count, bool rtl) {
-            w.WriteLine("<html {0}><body><center>", rtl? "dir=\"rtl\"": "");
+            w.WriteLine("<html {0}><body><center><style> big {{ font-size: 48; }} h1 {{ font-size: 72; }}</style>", rtl? "dir=\"rtl\"": "");
 
             for (uint i = 0; i < count; ++i)
             {
@@ -95,15 +95,15 @@ namespace Bingo
                     var x = shuffled[col + row * options.size];
                     var middle = options.size / 2;
                     if (col == middle && row == middle && options.center != null) {
-                        x = options.center;                    
+                        x = options.center;
                     }
-                    if (safeExists(dir, x)) {    
-                        x = $"<img width=\"{cellSize}\" height=\"{cellSize}\" src=\"{x}\"/>"; 
+                    if (safeExists(dir, x)) {
+                        x = $"<img width=\"{cellSize}\" height=\"{cellSize}\" src=\"{x}\"/>";
                     }
                     else {
                         x = x.Replace("|", "<br/>");
                     }
-                
+
                     w.WriteLine($"<td align=\"center\" style=\"width:{cellSize}px;height:{cellSize}px \" ><big>" + x + "</big></td>");
                 }
                 w.WriteLine("</tr>");
