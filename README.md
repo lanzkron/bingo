@@ -3,7 +3,7 @@ This small program allows generating personalised bingo cards.
 
 Rather than reading out the actual content of a cell on the bingo board you will read out a _definition_ and the players will mark the cell with the answer to said definition.
 
-    dotnet run --title=Flowers bingo --size=3 --center=Flowers
+    dotnet run --title="Flowers bingo" --size=3 --center=Flowers
 
 ![Example board](https://user-images.githubusercontent.com/11015162/55152838-d93b6b80-5159-11e9-9497-74e227d80420.png)
 
